@@ -1,4 +1,4 @@
-# A-Frame 360 tour template
+# A-Frame 360 tour
 
 String together a tour with hotspots using 360&deg; panorama images.
 
