@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>360&deg; Tour</title>
+    <link rel="stylesheet" href="css/bundle.css">
+    <script src="js/vendor.js"></script>
+    <script src="js/bundle.js"></script>
+</head>
+<body>
+<a-scene hotspot-helper="target: #room-319-room-308" inspector>
+    <a-assets>
+        <a-mixin id="hotspot-text"
+                 text="font: exo2bold; width: 5"
+                 geometry="primitive: plane; width: 1.6; height: 0.4"
+                 material="color: black;"
+                 position="0 -0.6 0"
+        />
+
+        <a-mixin id="hotspot-target"
+                 geometry="primitive: octahedron; radius: 0.2;"
+                 material="flatShading: true; color: rgb(255, 0, 161)"
+        />
+        </a-mixin>
+    </a-assets>
+
+    <a-tour>
+        <a-panorama id="room-321" src="images/01pan.jpg" rotation="0 0 0"/>
+        <a-panorama id="room-319" src="images/02pan.jpg" rotation="0 0 0"/>
+        <a-panorama id="room-302" src="images/03pan.jpg" rotation="0 0 0"/>
+        <a-panorama id="room-308" src="images/04pan.jpg" rotation="0 0 0"/>
+
+        <a-hotspot id="room-321-room-319" for="room-321" to="room-319" mixin="hotspot-target"
+                   position="2.21 -0.13 4.48"
+                   rotation="-1.49 -138.79 0.00"
+        >
+            <a-text value="321 => 319" align="center" mixin="hotspot-text"></a-text>
+        </a-hotspot>
+
+        <a-hotspot id="room-319-room-308" for="room-319" to="room-308" mixin="hotspot-target"
+                   position="3.94 0.28 -3.06"
+                   rotation="-0.69 58.12 0">
+            <a-text value="319 => 308" align="center" mixin="hotspot-text"></a-text>
+        </a-hotspot>
+
+        <a-hotspot
+                id="room-308-room-302" for="room-308" to="room-302" mixin="hotspot-target"
+                position="-4.92 0.00 0.87"
+                rotation="0.00 -145.00 0.00"
+        />
+        <a-text value="308 => 302" align="center" mixin="hotspot-text"></a-text>
+        </a-hotspot>
+
+        <a-hotspot id="room-302-room-321" for="room-302" to="room-321" mixin="hotspot-target"
+                   position="-3.61 0.10 -3.46"
+                   rotation="1.15 46.18 -0.00">
+            <a-text value="302 => 321" align="center" mixin="hotspot-text"></a-text>
+        </a-hotspot>
+    </a-tour>
+
+
+    <!-- Camera + cursor. -->
+    <a-entity camera look-controls wasd-controls>
+        <a-entity position="0 0 -1"
+                  geometry="primitive: ring; radiusInner: 0.01; radiusOuter: 0.015;"
+                  material="color: cyan; shader: flat"
+                  cursor="fuse: true">
+            <a-animation begin="click" easing="ease-in" attribute="scale"
+                         fill="forwards" from="0.2 0.2 0.2" to="1 1 1" dur="150"></a-animation>
+            <a-animation begin="fusing" easing="ease-in" attribute="scale"
+                         fill="backwards" from="1 1 1" to="0.2 0.2 0.2" dur="1500"></a-animation>
+        </a-entity>
+    </a-entity>
+</a-scene>
+</body>
+</html>
