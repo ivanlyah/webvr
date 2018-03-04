@@ -1,0 +1,20 @@
+{
+  "name": "vr-360-tour",
+  "description": "Made with A-Frame, a WebVR framework.",
+  "author": "Ivan Lyah",
+  "version": "0.0.1",
+  "license": "MIT",
+  "repository": "webvr",
+  "scripts": {
+    "start": "npm run serve",
+    "serve": "aframe serve",
+    "build": "aframe build"
+  },
+  "dependencies": {
+    "aframe": "0.7.1",
+    "aframe-look-at-component": "0.5.1"
+  },
+  "devDependencies": {
+    "aframe-cli": "0.5.16"
+  }
+}
