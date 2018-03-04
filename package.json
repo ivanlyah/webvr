@@ -6,6 +6,7 @@
   "license": "MIT",
   "repository": "webvr",
   "scripts": {
+    "ghpages": "node scripts/ghpages.js",
     "start": "npm run serve",
     "serve": "aframe serve",
     "build": "aframe build"
@@ -15,6 +16,7 @@
     "aframe-look-at-component": "0.5.1"
   },
   "devDependencies": {
-    "aframe-cli": "0.5.16"
+    "aframe-cli": "0.5.16",
+    "gh-pages": "^1.1.0"
   }
 }
