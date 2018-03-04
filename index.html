@@ -9,7 +9,7 @@
     <script src="js/bundle.js"></script>
 </head>
 <body>
-<a-scene debug="true" inspector="true">
+<a-scene inspector="true">
     <a-assets>
         <a-mixin id="hotspot-text"
                  text="font: exo2bold; width: 5"
@@ -26,35 +26,35 @@
     </a-assets>
 
     <a-tour>
-        <a-panorama id="room-321" src="images/01pan.jpg" rotation="0 0 0"/>
         <a-panorama id="room-319" src="images/02pan.jpg" rotation="0 0 0"/>
-        <a-panorama id="room-302" src="images/03pan.jpg" rotation="0 0 0"/>
         <a-panorama id="room-308" src="images/04pan.jpg" rotation="0 0 0"/>
+        <a-panorama id="room-302" src="images/03pan.jpg" rotation="0 0 0"/>
+        <a-panorama id="room-321" src="images/01pan.jpg" rotation="0 0 0"/>
 
         <a-hotspot id="room-321-room-319" for="room-321" to="room-319" mixin="hotspot-target"
-                   position="2.21 -0.13 4.48"
-                   rotation="-1.49 -138.79 0.00"
+                   position="3.34 -0.30 3.71"
+                   rotation="-3.44 -137.97 0.00"
         >
             <a-text value="321 => 319" align="center" mixin="hotspot-text"></a-text>
         </a-hotspot>
 
         <a-hotspot id="room-319-room-308" for="room-319" to="room-308" mixin="hotspot-target"
-                   position="3.94 0.28 -3.06"
-                   rotation="-0.69 58.12 0">
+                   position="-4.55 0.19 -2.06"
+                   rotation="2.18 65.66 0.00">
             <a-text value="319 => 308" align="center" mixin="hotspot-text"></a-text>
         </a-hotspot>
 
         <a-hotspot
                 id="room-308-room-302" for="room-308" to="room-302" mixin="hotspot-target"
-                position="-4.92 0.00 0.87"
-                rotation="0.00 -145.00 0.00"
+                position="4.96 0.03 -0.657"
+                rotation="0.34 -82.51 -0.00"
         />
         <a-text value="308 => 302" align="center" mixin="hotspot-text"></a-text>
         </a-hotspot>
 
         <a-hotspot id="room-302-room-321" for="room-302" to="room-321" mixin="hotspot-target"
-                   position="-3.61 0.10 -3.46"
-                   rotation="1.15 46.18 -0.00">
+                   position="-3.64 0.02 -3.43"
+                   rotation="0.23 46.75 0.00">
             <a-text value="302 => 321" align="center" mixin="hotspot-text"></a-text>
         </a-hotspot>
     </a-tour>
