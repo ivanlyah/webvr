@@ -1,77 +1,78 @@
 <!DOCTYPE html>
 <html>
-<head>
+  <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>360&deg; Tour</title>
-    <link rel="stylesheet" href="css/bundle.css">
-    <script src="js/vendor.js"></script>
-    <script src="js/bundle.js"></script>
-</head>
-<body>
-<a-scene inspector="true">
-    <a-assets>
-        <a-mixin id="hotspot-text"
-                 text="font: exo2bold; width: 5"
-                 geometry="primitive: plane; width: 1.6; height: 0.4"
-                 material="color: black;"
-                 position="0 -0.6 0"
-        />
+    <title>360&deg; Image Gallery</title>
+    <meta name="description" content="360&deg; Image Gallery - A-Frame">
+    <script src="https://aframe.io/releases/0.8.0/aframe.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/annyang/2.5.0/annyang.min.js"></script>
+    <script src="build.js"></script>
+    <script src="https://npmcdn.com/aframe-animation-component@3.0.1"></script>
+    <script src="https://unpkg.com/aframe-event-set-component@^4.0.0/dist/aframe-event-set-component.min.js"></script>
+    <script src="https://unpkg.com/aframe-layout-component@4.2/dist/aframe-layout-component.min.js"></script>
+    <script src="https://unpkg.com/aframe-template-component@^3.1.1/dist/aframe-template-component.min.js"></script>
+    <script src="components/set-image.js"></script>
+    <script src="components/update-raycaster.js"></script>
+  </head>
+  <body>
+    <a-scene>
+      <a-assets>
 
-        <a-mixin id="hotspot-target"
-                 geometry="primitive: octahedron; radius: 0.2;"
-                 material="flatShading: true; color: rgb(255, 0, 161)"
-        />
-        </a-mixin>
-    </a-assets>
+        <audio id="click-sound" crossorigin="anonymous" src="https://cdn.aframe.io/360-image-gallery-boilerplate/audio/click.ogg"></audio>
 
-    <a-tour>
-        <a-panorama id="room-319" src="images/02pan.jpg" rotation="0 0 0"/>
-        <a-panorama id="room-308" src="images/04pan.jpg" rotation="0 0 0"/>
-        <a-panorama id="room-302" src="images/03pan.jpg" rotation="0 0 0"/>
-        <a-panorama id="room-321" src="images/01pan.jpg" rotation="0 0 0"/>
+        <img id="pan1" crossorigin="anonymous" src="./images/01pan.jpg">
+        <img id="pan2" crossorigin="anonymous" src="./images/02pan.jpg">
+        <img id="pan3" crossorigin="anonymous" src="./images/03pan.jpg">
+        <img id="pan4" crossorigin="anonymous" src="./images/04pan.jpg">
 
-        <a-hotspot id="room-321-room-319" for="room-321" to="room-319" mixin="hotspot-target"
-                   position="3.34 -0.30 3.71"
-                   rotation="-3.44 -137.97 0.00"
-        >
-            <a-text value="321 => 319" align="center" mixin="hotspot-text"></a-text>
-        </a-hotspot>
+        <!-- Image link template to be reused. -->
+        <script id="link" type="text/html">
+          <a-entity
+                  class="link"
+                  geometry="primitive: plane; height: 1; width: 1"
+                  material="shader: flat; color: #333; opacity: 0.8"
+                  event-set__1="_event: mousedown; scale: 1 1 1"
+                  event-set__2="_event: mouseup; scale: 1.2 1.2 1"
+                  event-set__3="_event: mouseenter; scale: 1.2 1.2 1"
+                  event-set__4="_event: mouseleave; scale: 1 1 1"
+                  set-image="on: click; target: #image-360; src: ${src}"
+                  sound="on: click; src: #click-sound"
+                  text="color: #eee; align:center; wrapCount: 10;  lineHeight: 50; font: kelsonsans; value: ${label}">
 
-        <a-hotspot id="room-319-room-308" for="room-319" to="room-308" mixin="hotspot-target"
-                   position="-4.55 0.19 -2.06"
-                   rotation="2.18 65.66 0.00">
-            <a-text value="319 => 308" align="center" mixin="hotspot-text"></a-text>
-        </a-hotspot>
+          </a-entity>
+        </script>
+      </a-assets>
 
-        <a-hotspot
-                id="room-308-room-302" for="room-308" to="room-302" mixin="hotspot-target"
-                position="4.96 0.03 -0.657"
-                rotation="0.34 -82.51 -0.00"
-        />
-        <a-text value="308 => 302" align="center" mixin="hotspot-text"></a-text>
-        </a-hotspot>
+      <!-- 360-degree image. -->
+      <a-sky id="image-360" radius="10" src="#pan1"></a-sky>
 
-        <a-hotspot id="room-302-room-321" for="room-302" to="room-321" mixin="hotspot-target"
-                   position="-3.64 0.02 -3.43"
-                   rotation="0.23 46.75 0.00">
-            <a-text value="302 => 321" align="center" mixin="hotspot-text"></a-text>
-        </a-hotspot>
-    </a-tour>
+      <!-- Image links. -->
+      <a-entity
+              id="links"
+              layout="type: line; margin: 1.5"
+              position="-2.25 0 -4"
+              visible="true"
+              speech-command__show="command: show menu; type: attribute; attribute: visible; value: true;"
+              speech-command__hide="command: hide menu; type: attribute; attribute: visible; value: false;"
+      >
+        <a-entity template="src: #link" data-src="#pan1" data-label="Room \n 321"></a-entity>
+        <a-entity template="src: #link" data-src="#pan2" data-label="Room \n 319"></a-entity>
+        <a-entity template="src: #link" data-src="#pan3" data-label="Room \n 302"></a-entity>
+        <a-entity template="src: #link" data-src="#pan4" data-label="Room \n 308"></a-entity>
+      </a-entity>
 
 
-    <!-- Camera + cursor. -->
-    <a-entity camera look-controls wasd-controls>
-        <a-entity position="0 0 -1"
-                  geometry="primitive: ring; radiusInner: 0.01; radiusOuter: 0.015;"
-                  material="color: cyan; shader: flat"
-                  cursor="fuse: true">
-            <a-animation begin="click" easing="ease-in" attribute="scale"
-                         fill="forwards" from="0.2 0.2 0.2" to="1 1 1" dur="150"></a-animation>
-            <a-animation begin="fusing" easing="ease-in" attribute="scale"
-                         fill="backwards" from="1 1 1" to="0.2 0.2 0.2" dur="1500"></a-animation>
-        </a-entity>
-    </a-entity>
-</a-scene>
-</body>
+      <!-- Camera + cursor. -->
+      <a-entity camera look-controls>
+        <a-cursor id="cursor"
+          animation__click="property: scale; startEvents: click; from: 0.1 0.1 0.1; to: 1 1 1; dur: 150"
+          animation__fusing="property: fusing; startEvents: fusing; from: 1 1 1; to: 0.1 0.1 0.1; dur: 1500"
+          event-set__1="_event: mouseenter; color: springgreen"
+          event-set__2="_event: mouseleave; color: black"
+          fuse="true"
+          raycaster="objects: .link">
+        </a-cursor>
+      </a-entity>
+    </a-scene>
+  </body>
 </html>
