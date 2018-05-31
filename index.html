@@ -37,12 +37,14 @@
               event-set__4="_event: mouseleave; scale: 1 1 1"
               set-image="on: click; target: #image-360; src: ${src}"
               sound="on: click; src: url(click.ogg)"
-              text="color: #eee; align:center; wrapCount: 10;  lineHeight: 50; font: kelsonsans; value: ${label}">
+              text="color: #eee; align:center; wrapCount: 10;  lineHeight: 50; font: kelsonsans; value: ${label}"
+              update-raycaster="#cursor">
 
       </a-entity>
     </script>
   </a-assets>
 
+  <a-entity id="annyang" annyang-speech-recognition></a-entity>
   <!-- 360-degree image. -->
   <a-sky id="image-360" radius="10" src="#pan1"></a-sky>
 
