@@ -24,10 +24,15 @@ AFRAME.registerComponent('set-image', {
       // Wait for fade to complete.
       setTimeout(function () {
         // Set image.
-        console.log('wow');
         data.target.setAttribute('material', 'src', data.src);
 
-        console.log('document.querySelector(\'[data-src="#pan1"]\')', document.querySelector('[data-src="#pan1"]'));
+        document.querySelectorAll('.link').forEach(el => {
+          el.setAttribute('material', 'color', '#333');
+          el.setAttribute('material', 'opacity', '.8');
+        });
+
+        document.querySelector('.link[data-target="' + data.src + '"]').setAttribute('material', 'color', '#a7f5a6');
+        document.querySelector('.link[data-target="' + data.src + '"]').setAttribute('material', 'opacity', '.4');
       }, data.dur);
     });
   },
@@ -43,6 +48,7 @@ AFRAME.registerComponent('set-image', {
     if (targetEl.dataset.setImageFadeSetup) {
       return;
     }
+
     targetEl.dataset.setImageFadeSetup = true;
 
     // Create animation.

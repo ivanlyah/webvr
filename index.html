@@ -1,22 +1,22 @@
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
     <meta charset="utf-8">
     <title>360&deg; Image Gallery</title>
     <meta name="description" content="360&deg; Image Gallery - A-Frame">
     <script src="//cdnjs.cloudflare.com/ajax/libs/annyang/2.5.0/annyang.min.js"></script>
     <script src="https://aframe.io/releases/0.7.0/aframe.min.js"></script>
-    <script src="build.js"></script>
     <script src="https://npmcdn.com/aframe-animation-component@3.0.1"></script>
     <script src="https://unpkg.com/aframe-event-set-component@^4.0.0/dist/aframe-event-set-component.min.js"></script>
     <script src="https://unpkg.com/aframe-layout-component@4.2/dist/aframe-layout-component.min.js"></script>
     <script src="https://unpkg.com/aframe-template-component@^3.1.1/dist/aframe-template-component.min.js"></script>
+    <script src="build.js"></script>
     <script src="components/set-image.js"></script>
     <script src="components/update-raycaster.js"></script>
-  </head>
-  <body>
-    <a-scene>
-      <a-assets>
+</head>
+<body>
+<a-scene>
+    <a-assets>
 
         <!--<audio id="click-sound" src="click.ogg"></audio>-->
 
@@ -26,55 +26,60 @@
         <img id="pan4" crossorigin="anonymous" src="./images/04pan.jpg">
 
         <!-- Image link template to be reused. -->
-        <script id="link" type="text/html">
-          <a-entity
-                  class="link"
-                  geometry="primitive: plane; height: 1; width: 1"
-                  material="shader: flat; color: #333; opacity: 0.8"
-                  event-set__1="_event: mousedown; scale: 1 1 1"
-                  event-set__2="_event: mouseup; scale: 1.2 1.2 1"
-                  event-set__3="_event: mouseenter; scale: 1.2 1.2 1"
-                  event-set__4="_event: mouseleave; scale: 1 1 1"
-                  set-image="on: click; target: #image-360; src: ${src}"
-                  sound="on: click; src: url(click.ogg)"
-                  text="color: #eee; align:center; wrapCount: 10;  lineHeight: 50; font: kelsonsans; value: ${label}"
-                  update-raycaster="#cursor">
+        <script id="link" type="text/x-handlebars-template">
+            <a-entity
+                    class="link"
+                    data-target="{{src}}"
+                    geometry="primitive: plane; height: 1; width: 1"
+                    material="shader: flat;
+                    {{#if first}}
+                        color: #a7f5a6; opacity: 0.4
+                    {{else}}
+                        color: #333; opacity: 0.8
+                    {{/if}}"
+                    event-set__1="_event: mousedown; scale: 1 1 1"
+                    event-set__2="_event: mouseup; scale: 1.2 1.2 1"
+                    event-set__3="_event: mouseenter; scale: 1.2 1.2 1"
+                    event-set__4="_event: mouseleave; scale: 1 1 1"
+                    set-image="on: click; target: #image-360; src: {{src}}"
+                    sound="on: click; src: url(click.ogg)"
+                    text="color: #eee; align:center; wrapCount: 10;  lineHeight: 50; font: kelsonsans; value: {{label}}"
+                    update-raycaster="#cursor">
 
-          </a-entity>
+            </a-entity>
         </script>
-      </a-assets>
+    </a-assets>
 
-      <a-entity id="annyang" annyang-speech-recognition></a-entity>
-      <!-- 360-degree image. -->
-      <a-sky id="image-360" radius="10" src="#pan1"></a-sky>
+    <a-entity id="annyang" annyang-speech-recognition></a-entity>
+    <!-- 360-degree image. -->
+    <a-sky id="image-360" radius="10" src="#pan1"></a-sky>
 
-      <!-- Image links. -->
-      <a-entity
-              id="links"
-              layout="type: line; margin: 1.5"
-              position="-2.25 0 -4"
-              visible="true"
-              speech-command__show="command: show menu; type: attribute; attribute: visible; value: true;"
-              speech-command__hide="command: hide menu; type: attribute; attribute: visible; value: false;"
-      >
-        <a-entity template="src: #link" data-src="#pan1" data-label="Room \n 321"></a-entity>
+    <!-- Image links. -->
+    <a-entity
+            id="links"
+            layout="type: line; margin: 1.5"
+            position="-2.25 0 -4"
+            visible="true"
+            speech-command__show="command: show menu; type: attribute; attribute: visible; value: true; keyCode: 83"
+            speech-command__hide="command: hide menu; type: attribute; attribute: visible; value: false; keyCode: 72"
+    >
+        <a-entity template="src: #link" data-first="true" data-src="#pan1" data-label="Room \n 321"></a-entity>
         <a-entity template="src: #link" data-src="#pan2" data-label="Room \n 319"></a-entity>
         <a-entity template="src: #link" data-src="#pan3" data-label="Room \n 302"></a-entity>
         <a-entity template="src: #link" data-src="#pan4" data-label="Room \n 308"></a-entity>
-      </a-entity>
+    </a-entity>
 
 
-      <!-- Camera + cursor. -->
-      <a-entity camera look-controls>
+    <!-- Camera + cursor. -->
+    <a-entity camera look-controls>
         <a-cursor id="cursor"
-          animation__click="property: scale; startEvents: click; from: 0.1 0.1 0.1; to: 1 1 1; dur: 150"
-          animation__fusing="property: fusing; startEvents: fusing; from: 1 1 1; to: 0.1 0.1 0.1; dur: 1500"
-          event-set__1="_event: mouseenter; color: springgreen"
-          event-set__2="_event: mouseleave; color: black"
-          fuse="true"
-          raycaster="objects: .link">
+                  animation__click="property: scale; startEvents: click; from: 0.1 0.1 0.1; to: 1 1 1; dur: 150"
+                  animation__fusing="property: fusing; startEvents: fusing; from: 1 1 1; to: 0.1 0.1 0.1; dur: 1500"
+                  event-set__1="_event: mouseenter; color: springgreen"
+                  event-set__2="_event: mouseleave; color: black"
+                  raycaster="objects: .link">
         </a-cursor>
-      </a-entity>
-    </a-scene>
-  </body>
+    </a-entity>
+</a-scene>
+</body>
 </html>
